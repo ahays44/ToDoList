@@ -1,9 +1,45 @@
 package com.theironyard;
 
+
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
+
+    public static void createItem(Scanner scanner, ArrayList<ToDoItem> items) {
+        System.out.println("Enter your to do item.");
+        String text = scanner.nextLine();
+        ToDoItem item = new ToDoItem(text, false);
+        items.add(item);
+    }
+
+    public static void toggleItem(Scanner scanner, ArrayList<ToDoItem> items) {
+        System.out.println("Enter the number of the item you wish to toggle.");
+        String numStr = scanner.nextLine();
+        try {
+            int num = Integer.valueOf(numStr);
+            ToDoItem tempItem = items.get(num - 1);
+            tempItem.isDone = !tempItem.isDone;
+        }
+        catch (NumberFormatException e) {
+            System.out.println("You didn't type a number!");
+        }
+        catch (ArrayIndexOutOfBoundsException e) {
+            System.out.println("Number isn't valid!");
+        }
+    }
+
+    public static void listItems(ArrayList<ToDoItem> items) {
+        int i = 1;
+        for (ToDoItem toDoItem : items) {
+            String checkBox = "[ ]";
+            if (toDoItem.isDone) {
+                checkBox = "[X]";
+            }
+            System.out.println(i + ". " + toDoItem.text + " " + checkBox);
+            i++;
+        }
+    }
 
     public static void main(String[] args) {
         ArrayList<ToDoItem> items = new ArrayList<>();
@@ -18,39 +54,13 @@ public class Main {
 
             switch (option) {
                 case "1":
-                    // create new item
-                    System.out.println("Enter your to do item.");
-                    String text = scanner.nextLine();
-                    ToDoItem item = new ToDoItem(text, false);
-                    items.add(item);
+                    createItem(scanner, items);
                     break;
                 case "2":
-                    //toggle item
-                    System.out.println("Enter the number of the item you wish to toggle.");
-                    String numStr = scanner.nextLine();
-                    try {
-                        int num = Integer.valueOf(numStr);
-                        ToDoItem tempItem = items.get(num - 1);
-                        tempItem.isDone = !tempItem.isDone;
-                    }
-                    catch (NumberFormatException e) {
-                        System.out.println("You didn't type a number!");
-                    }
-                    catch (ArrayIndexOutOfBoundsException e) {
-                        System.out.println("Number isn't valid!");
-                    }
+                    toggleItem(scanner, items);
                     break;
                 case "3":
-                    //list items
-                    int i = 1;
-                    for (ToDoItem toDoItem : items) {
-                        String checkBox = "[ ]";
-                        if (toDoItem.isDone) {
-                            checkBox = "[X]";
-                        }
-                        System.out.println(i + ". " + toDoItem.text + " " + checkBox);
-                        i++;
-                    }
+                    listItems(items);
                     break;
                 default :
                     System.out.println("Invalid option.");
