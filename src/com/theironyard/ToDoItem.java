@@ -6,9 +6,16 @@ package com.theironyard;
 public class ToDoItem {
     String text;
     boolean isDone;
+    int id;
 
     public ToDoItem(String text, boolean isDone) {
         this.text = text;
         this.isDone = isDone;
+    }
+
+    public ToDoItem(String text, boolean isDone, int id) {
+        this.text = text;
+        this.isDone = isDone;
+        this.id = id;
     }
 }
